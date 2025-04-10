@@ -2,13 +2,29 @@ package coroutines.sequences.prime
 
 import org.junit.Test
 import java.math.BigInteger
+import javax.swing.text.html.HTML.Tag.P
+import kotlin.math.sqrt
 import kotlin.test.assertEquals
 
 val primes: Sequence<BigInteger> = sequence {
-    TODO()
+    var number = BigInteger.TWO
+    yield(number)
+
+    outer@ while (true) {
+        number++
+        var i = BigInteger.TWO
+        while (i < number) {
+            if (number % i == BigInteger.ZERO) {
+                continue@outer
+            }
+            i++
+        }
+        yield(number)
+    }
 }
 
 class PrimesTest {
+
     @Test
     fun `should calculate the first 10 prime numbers`() {
         val primes = primes.take(10).toList()
